@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>This is my first blog</title>
+	<style>
+
+  @media(max-width: 488px){
+    .articke-container{
+      margin-right: 20px;
+    }
+  }
+
+  .article-container {
+    margin: 0 auto;
+    width: 700px;
+  }
+  .related-avatar-group {
+    display: none;
+  }
+
+
+  .article-container .author-info {
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eeeeee;
+    overflow: hidden;
+    font-size: 12px;
+    color: #999999;
+  }
+
+  .article-container .author-info .follow, .article-container .author-info .following {
+    float: right;
+    margin-top: 10px;
+  }
+
+  .article-container .author-info .avatar {
+    float: left;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  img {
+    max-width: 100%;
+    width: auto\9;
+    height: auto;
+    vertical-align: middle;
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+  }
+  .article-container .author-info .label {
+    background: none;
+    border: 1px solid #e78170;
+    color: #e78170;
+    text-shadow: none;
+    font-size: 11px;
+    font-weight: normal;
+    line-height: 1;
+  }
+  .label {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+  }
+  .label, .badge {
+    display: inline-block;
+    padding: 2px 4px;
+    font-size: 11.844px;
+    font-weight: bold;
+    line-height: 14px;
+    color: white;
+    vertical-align: baseline;
+    white-space: nowrap;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    background-color: #999999;
+  }
+  .article-container .author-info .author-name {
+    margin: 0 5px;
+  }
+  .blue-link {
+    color: #4094c7;
+  }
+  .blue-link:hover {
+    color: #075b8d;
+  }
+  a:hover, a:focus {
+    text-decoration: none;
+  }
+  a:hover, a:active {
+    outline: 0;
+  }
+  .article-container .author-info>div {
+    margin-top: 3px;
+  }
+  .article .preview .title {
+    word-break: break-all;
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1.5;
+  }
+  .article-container .meta-top {
+    margin: 20px 0;
+  }
+  .article-container .meta-top span {
+    position: relative;
+    top: 1px;
+    margin-right: 10px;
+    font-size: 12px;
+    color: #999999;
+  }
+  .article-container .article .show-content p{
+    text-align: justify;
+    word-break: initial;
+    word-break: break-word;
+  }
+  .article-container .article .show-content p{
+    margin: 0 0 25px 0;
+    font-family: Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+  }
+  @media screen and (max-width: 768px){
+    .article-container {
+      width: 100%;
+    }
+  }
+	</style>
+</head>
+<body> 
+ <div class="article-container">
+    <!-- Article activities for width under 768px -->
+    <div class="related-avatar-group activities"></div>
+    <div class="article">
+      <div class="preview">
+        <div class="author-info">
+         <span class="label">
+                作者
+            </span>
+          <a class="author-name blue-link" href="http://www.zengxihao.xyz" target="_blank">
+            <span>你豪哥晕晕</span>
+          </a>
+
+          <span data-toggle="tooltip" data-original-title="最后编辑于 2017-02-20 11:52:01">2017-02-20 11:52:01</span>
+        </div>
+
+        <h1 class="title">血泪交织！聊聊搭建博客php后端踩过的坑</h1>
+        <div class="meta-top">
+          <span class="wordage"></span>
+          <span class="views-count"></span>
+          <span class="comments-count"></span>
+          <span class="likes-count"></span>
+        </div>
+
+        <!-- Collection/Bookmark/Share for width under 768px -->
+        <div class="article-share"></div>
+        <!-- -->
+
+        <div class="show-content">
+            <p><b>网页前端与后端之间如何交互</b></p>
+            <p><b>两者数据以什么样的形式传递</b></p>
+            <p><b>用php作为后端连接数据库需要注意哪些问题</b></p>
+            <p>网页一般都是前后端分离，前端需要数据的时候可以通过后端提供的接口传递准确参数，以GET,POST等方式与后端进行交互，然后提供一个回调函数来对得到的数据进行处理。</p>
+            <a name="p1"><p><b>浏览器发起GET,POST请求</b></p></a>
+            <p>Http定义了与服务器交互的不同方法，最基本的方法有4种，分别是GET，POST，PUT，DELETE。URL全称是资源描述符，我们可以这样认为：一个URL地址，它用于描述一个网络上的资源，而HTTP中的GET，POST，PUT，DELETE就对应着对这个资源的查，改，增，删4个操作。GET一般用于获取、查询资源信息，而POST一般用于更新资源信息。</p>
+            <p>Http的GET，POST请求可以用在表单提交，ajax等方面。简单写下ajax使用XMLHttpRequest对象发送get请求的js代码：</p>
+            <code>
+                  //创建XMLHttpRequest对象<br>
+            	  const request = new XMLHttpRequest(); <br><br>
+            	  //初始化HTTP请求参数，但是不发送请求(true表示请求是异步执行，如果是false的话请求同步，后续对send的调用将会阻塞)<br>
+			      request.open('GET', 'url', true);<br><br>
+                  
+                  //设置请求头部信息content-type指定网络文件的类型和编码,一些头部信息:content-type、connection、cookie、accept-xxx等<br>
+			      request.setRequestHeader('Content-Type', 'text/html');<br><br>
+
+
+			      //指定回调函数，异步数据请求成功之后的方法 对浏览器数据进行处理<br>
+			      request.onload = function() {<br>
+			        //callback
+			        <br>
+		            if(this.status == 200||this.status == 304)<br>{
+				        alert(this.responseText);<br>
+				    } <br>
+			      };<br><br>
+
+			      //其他的一些事件处理函数<br>
+			      request.ontimeout = function(e) { ... }; <br>
+				  request.onerror = function(e) { ... };<br>
+				  request.upload.onprogress = function(e) { ... };<br><br>
+
+				  //发送请求，使用get的话没有参数，使用post或者put的话需要加上数据<br>
+				  //发送请求之后进入readyState监听状态，只有readyState变为4才执行onload回调函数<br>
+			      request.send();
+			      <br><br>
+            </code>
+            <p>上面这段代码足以应付简单的ajax场景，如果有更加复杂的场景的话就需要自己继续深入探索了。</p>
+            <a name="p2"><p><b>前端后端使用json类型数据进行交互</b></p></a>
+            
+            <p>JSON: JavaScript Object Notation，用于存储和交换信息，对于AJAX应用程序来说，json是比xml更快更易使用的，我所理解的json就是类似于java的key,value组成的map，根据键值获取数据。键值对应的数据可以是字符串，数组，甚至json。</p>
+            <code>
+            	var jsonObject = {'a':'我','b':'不爱','c':{
+            	  'a':'why','b':'nowhy'
+            	}};<br>
+            	alert(jsonObject.a);//我<br>
+                //jsonObject.c.a:why <br><br>
+            </code>
+            <p>需要注意下JSON文本的 MIME 类型是 "application/json"</p>
+            <a name="p3"><p><b>php作为网页后端踩过的坑(血和泪的教训！)</b></p></a>
+            <ul>
+            	<li>
+            	   <p>由于本机phpstudy配置的端口为9096，网站运行端口为8080，这样请求服务器就会出现跨域的问题！直接请求'server/comment.php'的话报错，No 'Access-Control-Allow-Origin' header is present on the requested resource.</p>
+            	   <p>解决方法：在php入口设置Access-Controll-Allow-Origin来实现跨域<br>
+                      <code>
+                        <br>
+                      	header('Access-Control-Allow-Origin:*');//允许所有域名访问<br>
+                      	header('Access-Control-Allow-Origin:http://localhost:8080');//只允许某个域名访问<br>
+                      </code>
+            	   </p>
+                </li>
+            	<li>
+            	   <p>个人博客使用的就是简单的php，前端传递参数的时候加上一个act，php后端获取数据简单的判断act然后switch case就进行处理，这样的话act不同传递的参数是不一样的，最好的话是在php顶部用注释来声明php文件提供的接口，需要的参数，返回值类型，这样编码的时候才有点条理。可以有个依照，前端请求的话传参也有个依据。</p>
+                </li>
+                <li>
+                	<p>
+                		网站前端渲染后端数据的时候往往会出现中文乱码的情况，数据库编码格式使用了utf-8，网页格式也是utf-8，可是为什么就是会乱码
+                	</p>
+                	<p>解决方法：执行mysql_query的时候，可以先执行mysql_query("set names 'utf8'"),告诉mysql服务器（字符集转换器）把后面要发送的sql语句使用的字符集当作指定的字符集来解析，并且返回的结果数据的字符集也是指定的字符集。作用就是保证客户端（sql语句）和服务器端使用的编码一致，不至于出现乱码或数据丢失。</p>
+                </li>
+                <li>
+                	<p>
+                		最大的两个坑之一就是需要拼凑sql语句：一定要注意的是insert时候varchar类型的数据是需要加上""插入的，例如
+                		<code>
+                			<br><br>$newC='"'.$row[0].'/'.$newComment.'"';<br><br>
+                		</code>
+                		两个字符串拼接之后还需要在外部加上一对引号，才可以成功插入数据库，debug半天才发现这样的错误，手把手传递一个<strong>debug不传之秘</strong>，可以用echo把sql语句一并返回给前端，在前端浏览器f12打开开发者工具，点network，就可以看到一系列的网络请求，找到出错的请求，可以看一下preview，这样的话就可以看到sql语句，来判断sql是否错误。
+                	</p>
+                </li>
+                <li>
+                	<p>
+                		另外一个也是拼凑，拼凑echo返回的数据，怎么拼凑一个<strong>[{},{}]</strong>形式的json数组，更加可怕的是拼凑一个<strong>[{'a':'a','b':['','']}]</strong>，json数组，json里面还会有一个字符串数组。
+                	</p>
+                	<p>使用array_push,explode,implode三个php函数，下面直接上手最难的：</p>
+                	<code>
+                		<br>
+                		<br>
+					        $sql="select * from message";<br>
+						    $res=mysql_query($sql);<br>
+						    $final=array();<br>
+						    while($row=mysql_fetch_array($res)){<br>
+						    	$arr=array();<br>
+								array_push($arr, '"id":'.$row[0]);<br>
+								array_push($arr, '"title":"'.$row[1].'"');<br>
+								array_push($arr, '"date":"'.$row[2].'"');<br>
+								array_push($arr, '"content":"'.$row[3].'"');<br>
+								array_push($arr, '"agree":'.$row[4]);<br>
+
+								//用'/'分割评论 得到数组 例如['a','b'] <br>
+								$arr_comment=explode("/", $row[5]);<br><br>
+
+								//合并评论形成 a","b <br>
+								$allComments=implode('","',$arr_comment);<br><br>
+
+								//首位加上[] 形成[a,b]  <br>
+								$tobeImplode='["'.$allComments.'"]';<br><br>
+
+								array_push($arr, '"comments":'.$tobeImplode);<br><br>
+								
+								//将数组元素合并加入到final数组中 <br>
+								array_push($final, implode(',', $arr));<br><br>
+						    } <br><br>
+
+						    //将最终数组元素形成json数组发送 <br>
+						    if(count($final)>0){<br> 
+								echo '[{'.implode('},{', $final).'}]';<br>
+						    }else{<br>
+						    	echo '[]';<br>
+						    } <br><br>
+							
+                	</code>
+                </li>
+            </ul>
+            <br><br><br>
+            <p><b>
+            	以上只是自己的一些浅薄见解，各个方面都是刚入门的水平，都是刚好会用没有深入研究，但是我觉得这样就是最迅速的开发方式了，对各种语言有一定的了解之后，直接动手实践，其实各种技术栈都是工具而已，工具能用好即可，遇到复杂的地方或者用不好工具的话这时候再去深究。
+            </b></p>
+            <p><b>如果有出错的地方欢迎指出，如果觉得代码部分辣眼睛的话，我下次加一些样式好吧。</b></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
