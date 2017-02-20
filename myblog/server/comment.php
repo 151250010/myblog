@@ -5,7 +5,7 @@ header('Access-Control-Allow-Origin:*');
 // 响应类型
 header('Access-Control-Allow-Methods:GET,POST,PUT');
 header('Access-Control-Allow-Headers:x-requested-with,content-type');
-header("content-type:application/json"); //这句话TM很重要哦，否则到前端获取时 只是普通字符串，不会自动识别
+header("content-type:application/json"); 
 /*
 提供两个接口，增加评论和获取评论信息
 传递参数时候加上act:get or add
@@ -15,14 +15,12 @@ add传递的需要是json格式： {author:'',repliedone:'',date:'',isreply:0,co
 
  */
 
-$mysql_database='bdm261699475_db';
-// $mysql_database='blog_comment';
+ $mysql_database='blog_comment';
 
 // 连接数据库
-// $db=@mysql_connect('localhost', 'root', 'mysql');
+$db=@mysql_connect('localhost', 'root', 'mysql');
 
 
-$db=@mysql_connect('bdm261699475.my3w.com','bdm261699475','963852741zx');
 
 // 记住需要加上一句设置编码
 mysql_query("set names 'utf8'");
