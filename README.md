@@ -1,5 +1,5 @@
 # myblog
-This is a simple website building with vue and php,including vue,vue-router,vue-axios,webpack,vue-material adn php.
+This is a simple website building with vue and php,including vue,vue-router,vue-axios,webpack,vue-material and php.
 ##[这是网站](http://www.zengxihao.xyz)<br>
 ##You can use yarn or npm to install this project. <br>运行环境：node,npm,phpstudy
 ```
