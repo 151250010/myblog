@@ -16,14 +16,10 @@ addComment() 传参数act id newComment 返回error:0
 addMessage() 传参数act id title date content 返回error:0
  */
 
-$mysql_database='bdm261699475_db';
-// $mysql_database='blog_comment';
+ $mysql_database='blog_comment';
 
 // 连接数据库
-// $db=@mysql_connect('localhost', 'root', 'mysql');
-
-
-$db=@mysql_connect('bdm261699475.my3w.com','bdm261699475','963852741zx');
+ $db=@mysql_connect('localhost', 'root', 'mysql');
 
 // 记住需要加上一句设置编码
 mysql_query("set names 'utf8'");
